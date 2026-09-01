@@ -419,7 +419,7 @@ A Barbados Artificial Intelligence Research Framework
 
 ## Author
 
-** Ibe Ezenwa Augustine**
+**Ibe Ezenwa Augustine**
 
 Full-Stack Software Engineer | Maritime Operations & Logistics | Researcher | NYCAR
 
