@@ -407,6 +407,7 @@ The project is being developed incrementally toward deeper validation, privacy-p
 **Research Focus**
 
 Privacy-Preserving Digital Infrastructure for AI-Assisted Trust, Compliance, and Governance.
+A Barbados Artificial Intelligence Research Framework
 
 **Key Research Areas**
 
