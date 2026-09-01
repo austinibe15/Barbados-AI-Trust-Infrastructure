@@ -419,9 +419,9 @@ A Barbados Artificial Intelligence Research Framework
 
 ## Author
 
-**Ezenwa Augustine Ibe (Austin Ibe)**
+** Ibe Ezenwa Augustine**
 
-Full-Stack Software Engineer | Maritime Operations & Logistics | Researcher
+Full-Stack Software Engineer | Maritime Operations & Logistics | Researcher | NYCAR
 
 BATI is developed as part of an ongoing research and prototype-development programme exploring the intersection of **software engineering, artificial intelligence, digital identity, privacy, trust, and governance**.
 
