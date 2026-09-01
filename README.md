@@ -418,20 +418,27 @@ A Barbados Artificial Intelligence Research Framework
 ---
 
 ## Author
+## Author
 
 **Ibe Ezenwa Augustine**
 
-Full-Stack Software Engineer | Maritime Operations & Logistics | Researcher | NYCAR
+**Full-Stack Software Engineer | Maritime Operations & Logistics | Researcher | New York Center for Advanced Research (NYCAR)**
 
-BATI is developed as part of an ongoing research and prototype-development programme exploring the intersection of **software engineering, artificial intelligence, digital identity, privacy, trust, and governance**.
+**Research Period: September-December 2026**
+
+BATI is developed as part of an ongoing postgraduate research and prototype-development programme at the **New York Center for Advanced Research (NYCAR)**, exploring the intersection of software engineering, artificial intelligence, digital identity, privacy, trust, compliance, and governance.
+
+The research forms part of the requirements for the **Artificial Intelligence Research Residency in Barbados**, with the resulting research and prototype contributing to a publication focused on privacy-preserving digital infrastructure for AI-assisted trust, compliance, and governance.
 
 ---
 
 ## Collaboration
 
-BATI welcomes research, technical, institutional, and development-oriented collaboration.
+BATI welcomes **research, technical, institutional, academic, and development-oriented collaboration** with organizations and individuals interested in trustworthy digital infrastructure.
 
-**Areas of interest:** Digital Identity · Responsible AI · Privacy Engineering · Digital Governance · Trust Infrastructure · Risk Intelligence · Institutional Accountability · Africa–Caribbean Knowledge Exchange
+**Areas of interest:** Digital Identity · Responsible AI · Privacy Engineering · Digital Governance · Trust Infrastructure · Risk Intelligence · Institutional Accountability · Africa–Caribbean Knowledge Exchange · AI Research & Innovation
+
+**Research Context:** Artificial Intelligence Research Residency in Barbados · New York Center for Advanced Research (NYCAR) · September 2026
 
 ---
 
