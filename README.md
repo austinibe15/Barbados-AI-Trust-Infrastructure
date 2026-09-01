@@ -2,7 +2,8 @@
 
 ### From Identity to Accountability
 
-**A Privacy-Preserving Digital Infrastructure for AI-Assisted Trust, Compliance, and Governance**
+**A Privacy-Preserving Digital Infrastructure for AI-Assisted Trust, Compliance, and Governance**.
+
 **A Barbados Artificial Intelligence Research Framework**
 
 > **Research Prototype | Digital Identity | AI | Trust Infrastructure | Governance | Privacy Engineering**
