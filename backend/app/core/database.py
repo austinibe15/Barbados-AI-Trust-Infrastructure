@@ -15,14 +15,6 @@ if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL is not configured")
 
 
-# Debug: show active database connection
-print("BATI DATABASE CONNECTION:")
-print(DATABASE_URL.replace(
-    DATABASE_URL.split("@")[0].split("//")[1],
-    "***"
-))
-
-
 engine = create_engine(
     DATABASE_URL,
     pool_pre_ping=True,
