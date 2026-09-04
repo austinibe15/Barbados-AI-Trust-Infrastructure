@@ -1,6 +1,11 @@
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel, Field
 from typing import Optional
+
+from fastapi import APIRouter, Depends, HTTPException, status
+from pydantic import BaseModel, Field
+from sqlalchemy.orm import Session
+
+from app.core.database import get_db
+from app.models.identity import Identity
 
 
 router = APIRouter(
@@ -9,9 +14,13 @@ router = APIRouter(
 )
 
 
+# ---------------------------------------------------------
+# REQUEST SCHEMAS
+# ---------------------------------------------------------
+
 class IdentityCreate(BaseModel):
     full_name: str = Field(min_length=2)
-    email: str
+    email: Optional[str] = None
     institution: Optional[str] = None
     role: Optional[str] = None
 
@@ -22,112 +31,174 @@ class IdentityUpdate(BaseModel):
     institution: Optional[str] = None
     role: Optional[str] = None
     status: Optional[str] = None
+    trust_level: Optional[str] = None
 
 
-identities = [
-    {
-        "id": 1,
-        "identity_id": "BATI-ID-0001",
-        "full_name": "Research Administrator",
-        "email": "administrator@bati.local",
-        "institution": "BATI Research Environment",
-        "role": "Administrator",
-        "status": "verified",
-    },
-    {
-        "id": 2,
-        "identity_id": "BATI-ID-0002",
-        "full_name": "Institutional Researcher",
-        "email": "researcher@bati.local",
-        "institution": "Research Institution",
-        "role": "Researcher",
-        "status": "verified",
-    },
-]
+# ---------------------------------------------------------
+# RESPONSE FORMAT
+# ---------------------------------------------------------
 
-
-@router.get("")
-def get_identities():
+def identity_response(identity: Identity):
     return {
-        "count": len(identities),
-        "items": identities,
-    }
-
-
-@router.get("/{identity_id}")
-def get_identity(identity_id: int):
-    for identity in identities:
-        if identity["id"] == identity_id:
-            return identity
-
-    raise HTTPException(
-        status_code=404,
-        detail="Identity not found",
-    )
-
-
-@router.post("", status_code=201)
-def create_identity(identity: IdentityCreate):
-
-    new_id = max(
-        [item["id"] for item in identities],
-        default=0,
-    ) + 1
-
-    new_identity = {
-        "id": new_id,
-        "identity_id": f"BATI-ID-{new_id:04d}",
+        "id": identity.id,
+        "identity_id": identity.identity_id,
         "full_name": identity.full_name,
         "email": identity.email,
         "institution": identity.institution,
         "role": identity.role,
-        "status": "pending",
+        "status": identity.status,
+        "trust_level": identity.trust_level,
     }
 
-    identities.append(new_identity)
 
-    return new_identity
+# ---------------------------------------------------------
+# LIST IDENTITIES
+# ---------------------------------------------------------
 
+@router.get("")
+def get_identities(
+    db: Session = Depends(get_db),
+):
+    identities = (
+        db.query(Identity)
+        .order_by(Identity.id.asc())
+        .all()
+    )
+
+    return {
+        "count": len(identities),
+        "items": [
+            identity_response(identity)
+            for identity in identities
+        ],
+    }
+
+
+# ---------------------------------------------------------
+# GET SINGLE IDENTITY
+# ---------------------------------------------------------
+
+@router.get("/{identity_id}")
+def get_identity(
+    identity_id: int,
+    db: Session = Depends(get_db),
+):
+    identity = (
+        db.query(Identity)
+        .filter(Identity.id == identity_id)
+        .first()
+    )
+
+    if not identity:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Identity not found",
+        )
+
+    return identity_response(identity)
+
+
+# ---------------------------------------------------------
+# CREATE IDENTITY
+# ---------------------------------------------------------
+
+@router.post(
+    "",
+    status_code=status.HTTP_201_CREATED,
+)
+def create_identity(
+    payload: IdentityCreate,
+    db: Session = Depends(get_db),
+):
+    next_id = (
+        db.query(Identity.id)
+        .order_by(Identity.id.desc())
+        .first()
+    )
+
+    new_id = (next_id[0] + 1) if next_id else 1
+
+    identity = Identity(
+        identity_id=f"BATI-ID-{new_id:04d}",
+        identity_type="individual",
+        full_name=payload.full_name,
+        email=payload.email,
+        institution=payload.institution,
+        role=payload.role,
+        status="pending",
+        trust_level="unverified",
+        biometric_verified=False,
+    )
+
+    db.add(identity)
+    db.commit()
+    db.refresh(identity)
+
+    return identity_response(identity)
+
+
+# ---------------------------------------------------------
+# UPDATE IDENTITY
+# ---------------------------------------------------------
 
 @router.put("/{identity_id}")
 def update_identity(
     identity_id: int,
-    identity: IdentityUpdate,
+    payload: IdentityUpdate,
+    db: Session = Depends(get_db),
 ):
-
-    for existing in identities:
-
-        if existing["id"] == identity_id:
-
-            update_data = identity.model_dump(
-                exclude_unset=True
-            )
-
-            existing.update(update_data)
-
-            return existing
-
-    raise HTTPException(
-        status_code=404,
-        detail="Identity not found",
+    identity = (
+        db.query(Identity)
+        .filter(Identity.id == identity_id)
+        .first()
     )
 
+    if not identity:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Identity not found",
+        )
+
+    update_data = payload.model_dump(
+        exclude_unset=True
+    )
+
+    for field, value in update_data.items():
+        setattr(identity, field, value)
+
+    db.commit()
+    db.refresh(identity)
+
+    return identity_response(identity)
+
+
+# ---------------------------------------------------------
+# DELETE IDENTITY
+# ---------------------------------------------------------
 
 @router.delete("/{identity_id}")
-def delete_identity(identity_id: int):
-
-    for index, identity in enumerate(identities):
-
-        if identity["id"] == identity_id:
-
-            deleted = identities.pop(index)
-
-            return {
-                "message": "Identity deleted successfully",
-                "identity": deleted,
-            }
-
-    raise HTTPException(
-        status_code=404,
-        detail="Identity not found",
+def delete_identity(
+    identity_id: int,
+    db: Session = Depends(get_db),
+):
+    identity = (
+        db.query(Identity)
+        .filter(Identity.id == identity_id)
+        .first()
     )
+
+    if not identity:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Identity not found",
+        )
+
+    deleted = identity_response(identity)
+
+    db.delete(identity)
+    db.commit()
+
+    return {
+        "message": "Identity deleted successfully",
+        "identity": deleted,
+    }

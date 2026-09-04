@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -85,11 +84,73 @@ def startup():
     print("Starting BATI database initialization...")
 
     try:
+        # -------------------------------------------------
+        # CHECK DATABASE CONNECTION
+        # -------------------------------------------------
+
         check_database()
+
+        # -------------------------------------------------
+        # CREATE DATABASE TABLES
+        # -------------------------------------------------
 
         Base.metadata.create_all(bind=engine)
 
+        # -------------------------------------------------
+        # SEED INITIAL BATI RESEARCH IDENTITIES
+        # -------------------------------------------------
+
+        db = SessionLocal()
+
+        try:
+            initial_identities = [
+                {
+                    "identity_id": "BATI-ID-0001",
+                    "identity_type": "individual",
+                    "full_name": "Research Administrator",
+                    "email": "administrator@bati.local",
+                    "institution": "BATI Research Environment",
+                    "role": "Administrator",
+                    "status": "active",
+                    "trust_level": "high",
+                    "biometric_verified": False,
+                },
+                {
+                    "identity_id": "BATI-ID-0002",
+                    "identity_type": "individual",
+                    "full_name": "Research User",
+                    "email": "researcher@bati.local",
+                    "institution": "BATI Research Environment",
+                    "role": "Researcher",
+                    "status": "active",
+                    "trust_level": "high",
+                    "biometric_verified": False,
+                },
+            ]
+
+            for identity_data in initial_identities:
+
+                existing = (
+                    db.query(Identity)
+                    .filter(
+                        Identity.identity_id
+                        == identity_data["identity_id"]
+                    )
+                    .first()
+                )
+
+                if not existing:
+                    db.add(
+                        Identity(**identity_data)
+                    )
+
+            db.commit()
+
+        finally:
+            db.close()
+
         print("BATI database tables verified.")
+        print("BATI initial identities verified.")
 
     except Exception as exc:
         print(f"BATI DATABASE ERROR: {exc}")
