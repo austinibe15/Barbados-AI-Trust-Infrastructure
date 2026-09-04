@@ -8,8 +8,9 @@ import {
   ShieldAlert,
 } from "lucide-react";
 
-const API_BASE_URL = "http://127.0.0.1:8000";
-
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+  
 interface RiskEvent {
   id: number;
   event_reference: string;
@@ -20,7 +21,7 @@ interface RiskEvent {
   explanation: string;
 }
 
-interface AuditEvent {
+interface AuditLog {
   id: number;
   event_id: string;
   event_type: string;
@@ -32,7 +33,7 @@ interface AuditEvent {
 
 export default function Experiments() {
   const [riskEvents, setRiskEvents] = useState<RiskEvent[]>([]);
-  const [auditEvents, setAuditEvents] = useState<AuditEvent[]>([]);
+  const [auditLogs, setauditLogs] = useState<AuditLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -58,7 +59,7 @@ export default function Experiments() {
             Array.isArray(riskData?.items) ? riskData.items : [],
           );
 
-          setAuditEvents(Array.isArray(auditData) ? auditData : []);
+          setauditLogs(Array.isArray(auditData) ? auditData : []);
         }
       } catch (err) {
         if (mounted) {
@@ -84,10 +85,10 @@ export default function Experiments() {
 
   const verificationEvents = useMemo(
     () =>
-      auditEvents.filter((event) =>
+      auditLogs.filter((event) =>
         event.event_type?.includes("VERIF"),
       ),
-    [auditEvents],
+    [auditLogs],
   );
 
   const riskExperiments = useMemo(
@@ -177,7 +178,7 @@ export default function Experiments() {
           <Activity className="h-5 w-5 text-blue-600" />
           <p className="mt-4 text-sm text-slate-500">Audit Activity</p>
           <p className="mt-1 text-2xl font-bold text-slate-950">
-            {loading ? "—" : auditEvents.length}
+            {loading ? "—" : auditLogs.length}
           </p>
           <p className="mt-1 text-xs text-slate-400">
             Traceable experiment-related activity
@@ -249,3 +250,5 @@ export default function Experiments() {
     </div>
   );
 }
+
+

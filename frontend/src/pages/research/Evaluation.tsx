@@ -8,8 +8,9 @@ import {
   Target,
 } from "lucide-react";
 
-const API_BASE_URL = "http://127.0.0.1:8000";
-
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+  
 interface RiskEvent {
   id: number;
   event_reference: string;
@@ -20,7 +21,7 @@ interface RiskEvent {
   explanation: string;
 }
 
-interface AuditEvent {
+interface AuditLog {
   id: number;
   event_id: string;
   event_type: string;
@@ -32,7 +33,7 @@ interface AuditEvent {
 
 export default function Evaluation() {
   const [riskEvents, setRiskEvents] = useState<RiskEvent[]>([]);
-  const [auditEvents, setAuditEvents] = useState<AuditEvent[]>([]);
+  const [auditLogs, setauditLogs] = useState<AuditLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -58,7 +59,7 @@ export default function Evaluation() {
             Array.isArray(riskData?.items) ? riskData.items : [],
           );
 
-          setAuditEvents(Array.isArray(auditData) ? auditData : []);
+          setauditLogs(Array.isArray(auditData) ? auditData : []);
         }
       } catch (err) {
         if (mounted) {
@@ -93,7 +94,7 @@ export default function Evaluation() {
       (event) => event.risk_classification?.toLowerCase() === "critical",
     ).length;
 
-    const successfulAudit = auditEvents.filter(
+    const successfulAudit = auditLogs.filter(
       (event) => event.status?.toLowerCase() === "success",
     ).length;
 
@@ -108,8 +109,8 @@ export default function Evaluation() {
         : 0;
 
     const successfulAuditRate =
-      auditEvents.length > 0
-        ? Math.round((successfulAudit / auditEvents.length) * 100)
+      auditLogs.length > 0
+        ? Math.round((successfulAudit / auditLogs.length) * 100)
         : 0;
 
     return {
@@ -119,7 +120,7 @@ export default function Evaluation() {
       averageRisk,
       successfulAuditRate,
     };
-  }, [riskEvents, auditEvents]);
+  }, [riskEvents, auditLogs]);
 
   return (
     <div className="min-h-full bg-slate-50 px-4 py-6 sm:px-6 lg:px-8">
@@ -282,3 +283,4 @@ export default function Evaluation() {
     </div>
   );
 }
+

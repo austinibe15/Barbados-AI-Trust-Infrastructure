@@ -9,9 +9,10 @@ import {
   XCircle,
 } from "lucide-react";
 
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
 
-interface AuditEvent {
+interface AuditLog {
   id: number;
   event_id: string;
   event_type: string;
@@ -71,14 +72,14 @@ function formatDate(value?: string) {
 }
 
 export default function Accountability() {
-  const [events, setEvents] = useState<AuditEvent[]>([]);
+  const [events, setEvents] = useState<AuditLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     let mounted = true;
 
-    async function loadAuditEvents() {
+    async function loadAuditLogs() {
       try {
         setLoading(true);
         setError("");
@@ -109,7 +110,7 @@ export default function Accountability() {
       }
     }
 
-    loadAuditEvents();
+    loadAuditLogs();
 
     return () => {
       mounted = false;
@@ -316,3 +317,4 @@ export default function Accountability() {
     </div>
   );
 }
+

@@ -13,7 +13,7 @@ import {
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
 
-interface AuditEvent {
+interface AuditLog {
   id: number;
   event_id?: string | null;
   event_reference?: string | null;
@@ -32,7 +32,7 @@ interface AuditEvent {
 
 interface AuditResponse {
   count?: number;
-  items?: AuditEvent[];
+  items?: AuditLog[];
 }
 
 function formatDate(value?: string | null): string {
@@ -63,11 +63,11 @@ function timestamp(value?: string | null): number {
   return date.getTime();
 }
 
-function eventTimestamp(event: AuditEvent): string | null {
+function eventTimestamp(event: AuditLog): string | null {
   return event.created_at ?? event.timestamp ?? null;
 }
 
-function displayReference(event: AuditEvent): string {
+function displayReference(event: AuditLog): string {
   return (
     event.event_id ??
     event.event_reference ??
@@ -75,7 +75,7 @@ function displayReference(event: AuditEvent): string {
   );
 }
 
-function displayActor(event: AuditEvent): string {
+function displayActor(event: AuditLog): string {
   if (event.actor_reference) {
     return event.actor_reference;
   }
@@ -90,13 +90,13 @@ function displayActor(event: AuditEvent): string {
   return "System";
 }
 
-function displayAction(event: AuditEvent): string {
+function displayAction(event: AuditLog): string {
   return event.action
     ? event.action.replaceAll("_", " ")
     : "AUDIT EVENT";
 }
 
-function displayEventType(event: AuditEvent): string {
+function displayEventType(event: AuditLog): string {
   return event.event_type
     ? event.event_type.replaceAll("_", " ")
     : "Unknown event";
@@ -133,7 +133,7 @@ function actionClass(action?: string | null): string {
   return "bg-slate-100 text-slate-700";
 }
 
-async function fetchAuditEvents(): Promise<AuditEvent[]> {
+async function fetchAuditLogs(): Promise<AuditLog[]> {
   const response = await fetch(`${API_BASE_URL}/api/audit`);
 
   if (!response.ok) {
@@ -142,7 +142,7 @@ async function fetchAuditEvents(): Promise<AuditEvent[]> {
     );
   }
 
-  const data: AuditEvent[] | AuditResponse = await response.json();
+  const data: AuditLog[] | AuditResponse = await response.json();
 
   if (Array.isArray(data)) {
     return data;
@@ -156,12 +156,12 @@ async function fetchAuditEvents(): Promise<AuditEvent[]> {
 }
 
 export default function AuditTrail() {
-  const [events, setEvents] = useState<AuditEvent[]>([]);
+  const [events, setEvents] = useState<AuditLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState("");
 
-  async function loadAuditEvents(showRefreshState = false) {
+  async function loadAuditLogs(showRefreshState = false) {
     try {
       if (showRefreshState) {
         setRefreshing(true);
@@ -171,9 +171,9 @@ export default function AuditTrail() {
 
       setError("");
 
-      const auditEvents = await fetchAuditEvents();
+      const auditLogs = await fetchAuditLogs();
 
-      setEvents(auditEvents);
+      setEvents(auditLogs);
     } catch (err) {
       setError(
         err instanceof Error
@@ -187,7 +187,7 @@ export default function AuditTrail() {
   }
 
   useEffect(() => {
-    loadAuditEvents();
+    loadAuditLogs();
   }, []);
 
   const recentEvents = useMemo(() => {
@@ -259,7 +259,7 @@ export default function AuditTrail() {
 
         <button
           type="button"
-          onClick={() => loadAuditEvents(true)}
+          onClick={() => loadAuditLogs(true)}
           disabled={refreshing}
           className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
         >
@@ -468,3 +468,5 @@ export default function AuditTrail() {
     </div>
   );
 }
+
+
