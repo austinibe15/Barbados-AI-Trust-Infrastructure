@@ -28,7 +28,7 @@ interface AuditLog {
 function getEventIcon(status: string, eventType: string) {
   if (status === "failed") {
     return (
-      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-red-50">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-red-50">
         <XCircle className="h-4 w-4 text-red-600" />
       </div>
     );
@@ -36,7 +36,7 @@ function getEventIcon(status: string, eventType: string) {
 
   if (eventType.includes("REVOK")) {
     return (
-      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-amber-50">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-amber-50">
         <AlertTriangle className="h-4 w-4 text-amber-600" />
       </div>
     );
@@ -44,14 +44,14 @@ function getEventIcon(status: string, eventType: string) {
 
   if (eventType.includes("VERIF")) {
     return (
-      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-50">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-50">
         <CheckCircle2 className="h-4 w-4 text-emerald-600" />
       </div>
     );
   }
 
   return (
-    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-50">
+    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-50">
       <Activity className="h-4 w-4 text-blue-600" />
     </div>
   );
@@ -144,13 +144,14 @@ export default function Accountability() {
   }, [events]);
 
   return (
-    <div className="min-h-full bg-slate-50 px-4 py-6 sm:px-6 lg:px-8">
-      <div className="mb-7">
-        <div className="text-xs font-semibold uppercase tracking-wider text-[#55749c]">
+    <div className="min-h-full w-full overflow-x-hidden bg-slate-50 px-3 py-5 sm:px-6 sm:py-7 lg:px-8">
+      {/* Page Header */}
+      <div className="mb-6 sm:mb-7">
+        <div className="text-[11px] font-semibold uppercase tracking-wider text-[#55749c] sm:text-xs">
           Governance
         </div>
 
-        <h1 className="mt-2 text-2xl font-bold tracking-tight text-slate-950">
+        <h1 className="mt-2 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
           Accountability
         </h1>
 
@@ -160,11 +161,12 @@ export default function Accountability() {
         </p>
       </div>
 
-      <div className="mb-6 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3">
-        <div className="flex gap-3">
+      {/* Research Notice */}
+      <div className="mb-5 rounded-xl border border-blue-100 bg-blue-50 px-3 py-3 sm:mb-6 sm:px-4">
+        <div className="flex items-start gap-3">
           <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
 
-          <p className="text-xs leading-5 text-blue-800">
+          <p className="min-w-0 text-xs leading-5 text-blue-800">
             <span className="font-semibold">Live research data:</span>{" "}
             Accountability records are loaded directly from the BATI audit
             service.
@@ -172,17 +174,19 @@ export default function Accountability() {
         </div>
       </div>
 
+      {/* Error */}
       {error && (
-        <div className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-3 py-3 text-sm leading-5 text-red-700 sm:mb-6 sm:px-4">
           {error}
         </div>
       )}
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <Activity className="h-5 w-5 text-slate-700" />
 
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
             Total Audit Events
           </p>
 
@@ -190,15 +194,15 @@ export default function Accountability() {
             {statistics.total}
           </p>
 
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Recorded accountability events
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <CheckCircle2 className="h-5 w-5 text-emerald-600" />
 
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
             Successful Actions
           </p>
 
@@ -206,15 +210,15 @@ export default function Accountability() {
             {statistics.successful}
           </p>
 
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Successfully recorded operations
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <FileCheck2 className="h-5 w-5 text-blue-600" />
 
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
             Verification Events
           </p>
 
@@ -222,15 +226,15 @@ export default function Accountability() {
             {statistics.verifications}
           </p>
 
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Credential verification activity
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <AlertTriangle className="h-5 w-5 text-amber-600" />
 
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
             Failed / Revoked
           </p>
 
@@ -238,36 +242,38 @@ export default function Accountability() {
             {statistics.failed + statistics.revocations}
           </p>
 
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Events requiring attention
           </p>
         </div>
       </div>
 
-      <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <div className="mb-5 flex items-start justify-between">
-          <div>
+      {/* Accountability Events */}
+      <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:mt-6 sm:p-5">
+        <div className="mb-4 flex flex-col gap-3 sm:mb-5 sm:flex-row sm:items-start sm:justify-between">
+          <div className="min-w-0">
             <h2 className="text-sm font-semibold text-slate-900">
               Accountability Events
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs leading-5 text-slate-500">
               Live records from the BATI audit trail
             </p>
           </div>
 
           <div className="flex items-center gap-2 text-xs text-slate-400">
-            <Clock3 className="h-3.5 w-3.5" />
+            <Clock3 className="h-3.5 w-3.5 shrink-0" />
             Live API
           </div>
         </div>
 
         {loading ? (
-          <div className="py-12 text-center text-sm text-slate-400">
+          <div className="py-10 text-center text-sm text-slate-400 sm:py-12">
+            <div className="mx-auto mb-3 h-5 w-5 animate-spin rounded-full border-2 border-slate-200 border-t-slate-500" />
             Loading accountability events...
           </div>
         ) : events.length === 0 ? (
-          <div className="py-12 text-center text-sm text-slate-400">
+          <div className="py-10 text-center text-sm text-slate-400 sm:py-12">
             No accountability events recorded.
           </div>
         ) : (
@@ -280,13 +286,13 @@ export default function Accountability() {
                 {getEventIcon(event.status, event.event_type)}
 
                 <div className="min-w-0 flex-1">
-                  <div className="flex flex-col justify-between gap-1 sm:flex-row">
-                    <p className="text-sm font-semibold text-slate-800">
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                    <p className="break-words text-sm font-semibold text-slate-800">
                       {event.event_type.replaceAll("_", " ")}
                     </p>
 
                     <span
-                      className={`w-fit rounded-full px-2 py-1 text-[10px] font-semibold uppercase ${
+                      className={`min-h-7 w-fit shrink-0 rounded-full px-2 py-1 text-[10px] font-semibold uppercase leading-5 ${
                         event.status === "success"
                           ? "bg-emerald-50 text-emerald-700"
                           : event.status === "failed"
@@ -298,15 +304,17 @@ export default function Accountability() {
                     </span>
                   </div>
 
-                  <p className="mt-1 text-xs text-slate-500">
+                  <p className="mt-1 break-words text-xs leading-5 text-slate-500">
                     {event.description}
                   </p>
 
-                  <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-slate-400">
-                    <span>{event.event_id}</span>
-                    <span>{event.entity_id}</span>
-                    <span>{event.action}</span>
-                    <span>{formatDate(event.created_at)}</span>
+                  <div className="mt-3 grid grid-cols-1 gap-1 text-[10px] leading-5 text-slate-400 sm:flex sm:flex-wrap sm:gap-x-4 sm:gap-y-1">
+                    <span className="break-all">{event.event_id}</span>
+                    <span className="break-all">{event.entity_id}</span>
+                    <span className="break-words">{event.action}</span>
+                    <span className="break-words">
+                      {formatDate(event.created_at)}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -317,4 +325,3 @@ export default function Accountability() {
     </div>
   );
 }
-

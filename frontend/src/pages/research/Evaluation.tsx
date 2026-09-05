@@ -1,3 +1,4 @@
+
 import { useEffect, useMemo, useState } from "react";
 import {
   Activity,
@@ -10,7 +11,7 @@ import {
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
-  
+
 interface RiskEvent {
   id: number;
   event_reference: string;
@@ -123,13 +124,14 @@ export default function Evaluation() {
   }, [riskEvents, auditLogs]);
 
   return (
-    <div className="min-h-full bg-slate-50 px-4 py-6 sm:px-6 lg:px-8">
-      <div className="mb-7">
-        <div className="text-xs font-semibold uppercase tracking-wider text-[#55749c]">
+    <div className="min-h-full w-full overflow-x-hidden bg-slate-50 px-3 py-5 sm:px-6 sm:py-7 lg:px-8">
+      {/* Header */}
+      <div className="mb-5 sm:mb-7">
+        <div className="text-[11px] font-semibold uppercase tracking-wider text-[#55749c] sm:text-xs">
           Research
         </div>
 
-        <h1 className="mt-2 text-2xl font-bold tracking-tight text-slate-950">
+        <h1 className="mt-2 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
           Evaluation
         </h1>
 
@@ -139,11 +141,12 @@ export default function Evaluation() {
         </p>
       </div>
 
-      <div className="mb-6 rounded-xl border border-amber-100 bg-amber-50 px-4 py-3">
-        <div className="flex gap-3">
+      {/* Prototype Evaluation Notice */}
+      <div className="mb-5 rounded-xl border border-amber-100 bg-amber-50 px-3 py-3 sm:mb-6 sm:px-4">
+        <div className="flex items-start gap-3">
           <FlaskConical className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
 
-          <p className="text-xs leading-5 text-amber-800">
+          <p className="min-w-0 text-xs leading-5 text-amber-800">
             <span className="font-semibold">Prototype evaluation:</span>{" "}
             These metrics evaluate the current BATI event and risk data. They
             should not be interpreted as formal machine-learning benchmark
@@ -153,127 +156,156 @@ export default function Evaluation() {
         </div>
       </div>
 
+      {/* Error */}
       {error && (
-        <div className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-3 py-3 text-sm leading-5 text-red-700 sm:mb-6 sm:px-4">
           {error}
         </div>
       )}
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      {/* Evaluation Metrics */}
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
+        {/* Risk Events */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <BarChart3 className="h-5 w-5 text-blue-600" />
-          <p className="mt-4 text-sm text-slate-500">Risk Events</p>
+
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
+            Risk Events
+          </p>
+
           <p className="mt-1 text-2xl font-bold text-slate-950">
             {loading ? "—" : metrics.total}
           </p>
-          <p className="mt-1 text-xs text-slate-400">
+
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Current evaluation sample
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        {/* Average Risk */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <Target className="h-5 w-5 text-violet-600" />
-          <p className="mt-4 text-sm text-slate-500">Average Risk</p>
+
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
+            Average Risk
+          </p>
+
           <p className="mt-1 text-2xl font-bold text-slate-950">
             {loading ? "—" : metrics.averageRisk}
           </p>
-          <p className="mt-1 text-xs text-slate-400">
+
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Mean risk score
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        {/* Low Risk */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <CheckCircle2 className="h-5 w-5 text-emerald-600" />
-          <p className="mt-4 text-sm text-slate-500">Low Risk</p>
+
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
+            Low Risk
+          </p>
+
           <p className="mt-1 text-2xl font-bold text-slate-950">
             {loading ? "—" : metrics.low}
           </p>
-          <p className="mt-1 text-xs text-slate-400">
+
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Low-risk classifications
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        {/* Critical */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <ShieldAlert className="h-5 w-5 text-red-600" />
-          <p className="mt-4 text-sm text-slate-500">Critical</p>
+
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
+            Critical
+          </p>
+
           <p className="mt-1 text-2xl font-bold text-slate-950">
             {loading ? "—" : metrics.critical}
           </p>
-          <p className="mt-1 text-xs text-slate-400">
+
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Critical classifications
           </p>
         </div>
       </div>
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-2">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="flex items-center gap-3">
-            <Activity className="h-5 w-5 text-blue-600" />
+      {/* Evaluation Detail */}
+      <div className="mt-5 grid grid-cols-1 gap-5 sm:mt-6 sm:gap-6 xl:grid-cols-2">
+        {/* Audit Outcome */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+          <div className="flex items-start gap-3">
+            <Activity className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
 
-            <div>
+            <div className="min-w-0">
               <h2 className="text-sm font-semibold text-slate-900">
                 Audit Outcome
               </h2>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs leading-5 text-slate-500">
                 Successful audit records within the current sample
               </p>
             </div>
           </div>
 
-          <div className="mt-6">
-            <p className="text-4xl font-bold text-slate-950">
+          <div className="mt-5 sm:mt-6">
+            <p className="text-3xl font-bold text-slate-950 sm:text-4xl">
               {loading ? "—" : `${metrics.successfulAuditRate}%`}
             </p>
 
-            <p className="mt-2 text-xs text-slate-400">
+            <p className="mt-2 text-xs leading-5 text-slate-400">
               Successful audit-event rate
             </p>
           </div>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="flex items-center gap-3">
-            <BarChart3 className="h-5 w-5 text-violet-600" />
+        {/* Evaluation Interpretation */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+          <div className="flex items-start gap-3">
+            <BarChart3 className="mt-0.5 h-5 w-5 shrink-0 text-violet-600" />
 
-            <div>
+            <div className="min-w-0">
               <h2 className="text-sm font-semibold text-slate-900">
                 Evaluation Interpretation
               </h2>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs leading-5 text-slate-500">
                 Current research interpretation
               </p>
             </div>
           </div>
 
           <div className="mt-5 space-y-3">
-            <div className="rounded-xl bg-slate-50 p-4">
+            <div className="rounded-xl bg-slate-50 p-3.5 sm:p-4">
               <p className="text-xs font-semibold text-slate-700">
                 Risk engine
               </p>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs leading-5 text-slate-500">
                 Producing classified risk observations for evaluation.
               </p>
             </div>
 
-            <div className="rounded-xl bg-slate-50 p-4">
+            <div className="rounded-xl bg-slate-50 p-3.5 sm:p-4">
               <p className="text-xs font-semibold text-slate-700">
                 Audit layer
               </p>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs leading-5 text-slate-500">
                 Providing traceability for system actions and outcomes.
               </p>
             </div>
 
-            <div className="rounded-xl bg-slate-50 p-4">
+            <div className="rounded-xl bg-slate-50 p-3.5 sm:p-4">
               <p className="text-xs font-semibold text-slate-700">
                 ML benchmark
               </p>
 
-              <p className="mt-1 text-xs text-amber-600">
+              <p className="mt-1 text-xs leading-5 text-amber-600">
                 Pending labelled evaluation dataset/API.
               </p>
             </div>
@@ -283,4 +315,3 @@ export default function Evaluation() {
     </div>
   );
 }
-

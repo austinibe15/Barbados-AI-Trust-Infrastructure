@@ -111,26 +111,26 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
   }
 
   return (
-    <header className="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-4 sm:px-6">
+    <header className="sticky top-0 z-30 flex min-h-16 items-center justify-between border-b border-slate-200 bg-white px-3 sm:px-6">
       <div className="flex min-w-0 flex-1 items-center">
         {/* Mobile menu button */}
         <button
           type="button"
           onClick={onMenuClick}
-          className="mr-3 rounded-lg p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-800 lg:hidden"
+          className="mr-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-slate-500 transition hover:bg-slate-100 hover:text-slate-800 lg:hidden"
           aria-label="Open navigation menu"
         >
-          <Menu size={20} />
+          <Menu size={21} />
         </button>
 
         {/* Search */}
         <div
           ref={searchRef}
-          className="relative w-full max-w-xl"
+          className="relative min-w-0 w-full max-w-xl"
         >
-          <div className="flex h-10 items-center rounded-xl border border-slate-200 bg-slate-50 px-3 transition focus-within:border-slate-300 focus-within:bg-white">
+          <div className="flex min-h-11 items-center rounded-xl border border-slate-200 bg-slate-50 px-3 transition focus-within:border-slate-300 focus-within:bg-white">
             <Search
-              size={16}
+              size={17}
               className="shrink-0 text-slate-400"
             />
 
@@ -144,7 +144,7 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
                 }
               }}
               placeholder="Search infrastructure..."
-              className="ml-2 w-full bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
+              className="ml-2 min-w-0 w-full bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
               aria-label="Search BATI infrastructure"
             />
 
@@ -152,17 +152,17 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
               <button
                 type="button"
                 onClick={clearSearch}
-                className="ml-2 rounded-md p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+                className="ml-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
                 aria-label="Clear search"
               >
-                <X size={15} />
+                <X size={16} />
               </button>
             )}
           </div>
 
           {/* Search results */}
           {open && (
-            <div className="absolute left-0 right-0 top-12 z-50 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl">
+            <div className="absolute left-0 right-0 top-[52px] z-50 max-h-[70vh] overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl">
               {loading && (
                 <div className="px-4 py-4 text-sm text-slate-400">
                   Searching BATI infrastructure...
@@ -183,9 +183,9 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
                       No results found
                     </p>
 
-                    <p className="mt-1 text-xs text-slate-400">
-                      Try an identity, credential, risk event, audit event,
-                      institution, or reference number.
+                    <p className="mt-1 text-xs leading-5 text-slate-400">
+                      Try an identity, credential, risk event,
+                      audit event, institution, or reference number.
                     </p>
                   </div>
                 )}
@@ -193,16 +193,16 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
               {!loading &&
                 !error &&
                 results.length > 0 && (
-                  <div className="max-h-[420px] overflow-y-auto py-2">
+                  <div className="max-h-[70vh] overflow-y-auto py-2">
                     {results.map((result) => (
                       <button
                         key={`${result.type}-${result.id}`}
                         type="button"
                         onClick={() => handleResultClick(result)}
-                        className="block w-full border-b border-slate-100 px-4 py-3 text-left transition last:border-b-0 hover:bg-slate-50"
+                        className="block min-h-16 w-full border-b border-slate-100 px-4 py-3 text-left transition last:border-b-0 hover:bg-slate-50"
                       >
                         <div className="flex items-start justify-between gap-3">
-                          <div className="min-w-0">
+                          <div className="min-w-0 flex-1">
                             <p className="truncate text-sm font-semibold text-slate-800">
                               {result.title}
                             </p>
@@ -216,7 +216,7 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
                             </p>
                           </div>
 
-                          <span className="shrink-0 rounded-full bg-slate-100 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-500">
+                          <span className="hidden shrink-0 rounded-full bg-slate-100 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-500 sm:inline-flex">
                             {resultLabel(result.type)}
                           </span>
                         </div>
@@ -230,7 +230,7 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
       </div>
 
       {/* User / research identity */}
-      <div className="ml-4 hidden items-center gap-3 sm:flex">
+      <div className="ml-3 hidden items-center gap-3 sm:flex">
         <div className="text-right">
           <p className="text-xs font-semibold text-slate-700">
             Research Administrator

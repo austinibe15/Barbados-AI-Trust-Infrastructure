@@ -40,7 +40,7 @@ export default function Verification() {
   }
 
   useEffect(() => {
-    loadCredentials();
+    void loadCredentials();
   }, []);
 
   async function handleVerify(id: number) {
@@ -80,15 +80,15 @@ export default function Verification() {
   ).length;
 
   return (
-    <div className="px-4 py-7 sm:px-6 lg:px-8">
+    <div className="w-full overflow-x-hidden px-3 py-5 sm:px-6 sm:py-7 lg:px-8">
       {/* Header */}
-      <div className="mb-7 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
+      <div className="mb-6 flex flex-col gap-4 sm:mb-7 sm:flex-row sm:items-end sm:justify-between">
+        <div className="min-w-0">
           <div className="text-xs font-semibold uppercase tracking-wider text-[#55749c]">
             Identity
           </div>
 
-          <h1 className="mt-2 text-2xl font-bold text-slate-900">
+          <h1 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">
             Verification
           </h1>
 
@@ -99,17 +99,23 @@ export default function Verification() {
         </div>
 
         <button
+          type="button"
           onClick={loadCredentials}
-          className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm hover:bg-slate-50"
+          disabled={loading}
+          className="inline-flex min-h-11 w-full shrink-0 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
         >
-          <RefreshCw className="h-3.5 w-3.5" />
-          Refresh
+          <RefreshCw
+            className={`h-3.5 w-3.5 ${
+              loading ? "animate-spin" : ""
+            }`}
+          />
+          {loading ? "Refreshing..." : "Refresh"}
         </button>
       </div>
 
       {/* Research notice */}
-      <div className="mb-6 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3">
-        <div className="flex gap-3">
+      <div className="mb-5 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 sm:mb-6 sm:px-5">
+        <div className="flex items-start gap-3">
           <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
 
           <p className="text-xs leading-5 text-blue-800">
@@ -125,22 +131,22 @@ export default function Verification() {
 
       {/* Messages */}
       {message && (
-        <div className="mb-6 flex items-center gap-3 rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-          <CheckCircle2 className="h-4 w-4 shrink-0" />
-          {message}
+        <div className="mb-5 flex items-start gap-3 rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm leading-5 text-emerald-700 sm:mb-6">
+          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
+          <span>{message}</span>
         </div>
       )}
 
       {error && (
-        <div className="mb-6 flex items-center gap-3 rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-700">
-          <CircleAlert className="h-4 w-4 shrink-0" />
-          {error}
+        <div className="mb-5 flex items-start gap-3 rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm leading-5 text-red-700 sm:mb-6">
+          <CircleAlert className="mt-0.5 h-4 w-4 shrink-0" />
+          <span>{error}</span>
         </div>
       )}
 
       {/* Summary */}
-      <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
+        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <p className="text-xs text-slate-400">
             Total Credentials
           </p>
@@ -150,7 +156,7 @@ export default function Verification() {
           </p>
         </div>
 
-        <div className="rounded-xl border border-emerald-100 bg-white p-5 shadow-sm">
+        <div className="rounded-xl border border-emerald-100 bg-white p-4 shadow-sm sm:p-5">
           <p className="text-xs text-slate-400">
             Verified
           </p>
@@ -160,7 +166,7 @@ export default function Verification() {
           </p>
         </div>
 
-        <div className="rounded-xl border border-red-100 bg-white p-5 shadow-sm">
+        <div className="rounded-xl border border-red-100 bg-white p-4 shadow-sm sm:p-5">
           <p className="text-xs text-slate-400">
             Revoked
           </p>
@@ -172,24 +178,24 @@ export default function Verification() {
       </div>
 
       {/* Verification registry */}
-      <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <div className="border-b border-slate-100 px-5 py-4">
+      <div className="mt-5 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm sm:mt-6">
+        <div className="border-b border-slate-100 px-4 py-4 sm:px-5">
           <h2 className="text-sm font-semibold text-slate-900">
             Credential Verification
           </h2>
 
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs leading-5 text-slate-500">
             Select a credential to execute the backend verification
             workflow.
           </p>
         </div>
 
         {loading ? (
-          <div className="px-5 py-12 text-center text-sm text-slate-500">
+          <div className="px-4 py-12 text-center text-sm text-slate-500 sm:px-5">
             Loading credentials...
           </div>
         ) : credentials.length === 0 ? (
-          <div className="px-5 py-12 text-center text-sm text-slate-500">
+          <div className="px-4 py-12 text-center text-sm text-slate-500 sm:px-5">
             No credentials available for verification.
           </div>
         ) : (
@@ -207,26 +213,27 @@ export default function Verification() {
               return (
                 <div
                   key={credential.id}
-                  className="px-5 py-5 hover:bg-slate-50"
+                  className="px-4 py-5 transition hover:bg-slate-50 sm:px-5"
                 >
+                  {/* Credential header */}
                   <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                     <div className="flex min-w-0 gap-3">
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100">
                         <FileCheck2 className="h-5 w-5 text-slate-700" />
                       </div>
 
-                      <div className="min-w-0">
-                        <p className="text-sm font-semibold text-slate-900">
+                      <div className="min-w-0 flex-1">
+                        <p className="break-all text-sm font-semibold text-slate-900 sm:break-normal">
                           {credential.credential_id}
                         </p>
 
-                        <p className="mt-1 text-xs text-slate-500">
+                        <p className="mt-1 break-words text-xs leading-5 text-slate-500">
                           {credential.credential_type}
                           {" · "}
                           {credential.issuer}
                         </p>
 
-                        <p className="mt-1 text-xs text-slate-500">
+                        <p className="mt-1 break-words text-xs leading-5 text-slate-500">
                           Subject: {credential.subject}
                         </p>
 
@@ -236,7 +243,8 @@ export default function Verification() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    {/* Status badges */}
+                    <div className="flex flex-wrap items-center gap-2 lg:shrink-0">
                       <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[10px] font-bold uppercase text-slate-600">
                         {credential.trust_level}
                       </span>
@@ -258,8 +266,8 @@ export default function Verification() {
                   {/* Verification result */}
                   {isVerified &&
                     credential.verified_at && (
-                      <div className="mt-4 flex items-center gap-2 rounded-lg bg-emerald-50 px-3 py-2 text-xs text-emerald-700">
-                        <CheckCircle2 className="h-4 w-4" />
+                      <div className="mt-4 flex items-start gap-2 rounded-lg bg-emerald-50 px-3 py-2 text-xs leading-5 text-emerald-700">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
 
                         <span>
                           Credential verified at{" "}
@@ -271,8 +279,8 @@ export default function Verification() {
                     )}
 
                   {isRevoked && (
-                    <div className="mt-4 flex items-center gap-2 rounded-lg bg-red-50 px-3 py-2 text-xs text-red-700">
-                      <XCircle className="h-4 w-4" />
+                    <div className="mt-4 flex items-start gap-2 rounded-lg bg-red-50 px-3 py-2 text-xs leading-5 text-red-700">
+                      <XCircle className="mt-0.5 h-4 w-4 shrink-0" />
 
                       <span>
                         This credential has been revoked and
@@ -284,13 +292,14 @@ export default function Verification() {
                   {/* Action */}
                   <div className="mt-4">
                     <button
+                      type="button"
                       disabled={isRevoked || isVerifying}
                       onClick={() =>
                         handleVerify(credential.id)
                       }
-                      className="inline-flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                     >
-                      <CheckCircle2 className="h-3.5 w-3.5" />
+                      <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
 
                       {isVerifying
                         ? "Verifying..."
@@ -307,12 +316,12 @@ export default function Verification() {
       </div>
 
       {/* Backend workflow explanation */}
-      <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:mt-6 sm:p-5">
         <h2 className="text-sm font-semibold text-slate-900">
           Verification Workflow
         </h2>
 
-        <div className="mt-4 grid gap-3 md:grid-cols-4">
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-4">
           {[
             ["01", "Credential", "Select credential"],
             ["02", "Validation", "Check status and expiry"],
@@ -331,7 +340,7 @@ export default function Verification() {
                 {title}
               </p>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs leading-5 text-slate-500">
                 {description}
               </p>
             </div>
@@ -339,7 +348,7 @@ export default function Verification() {
         </div>
       </div>
 
-      <div className="mt-4 text-xs text-slate-400">
+      <div className="mt-4 pb-2 text-xs text-slate-400">
         Active credentials available: {activeCount}
       </div>
     </div>

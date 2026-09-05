@@ -84,7 +84,7 @@ function MetricCard({
   trend?: string
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
       <div className="flex items-start justify-between">
         <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100">
           <Icon className="h-5 w-5 text-slate-700" />
@@ -98,11 +98,13 @@ function MetricCard({
         )}
       </div>
 
-      <div className="mt-5">
+      <div className="mt-4 sm:mt-5">
         <p className="text-sm text-slate-500">{label}</p>
-        <p className="mt-1 text-2xl font-bold tracking-tight text-slate-950">
+
+        <p className="mt-1 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
           {value}
         </p>
+
         <p className="mt-1 text-xs text-slate-400">{description}</p>
       </div>
     </div>
@@ -121,17 +123,20 @@ function PipelineStep({
   icon: typeof Fingerprint
 }) {
   return (
-    <div className="relative flex gap-4">
+    <div className="relative flex gap-3 sm:gap-4">
       <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white">
         <Icon className="h-4 w-4 text-slate-700" />
       </div>
 
-      <div className="pb-5">
-        <div className="flex items-center gap-2">
+      <div className="min-w-0 pb-5">
+        <div className="flex flex-wrap items-center gap-2">
           <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
             {number}
           </span>
-          <h3 className="text-sm font-semibold text-slate-900">{title}</h3>
+
+          <h3 className="text-sm font-semibold text-slate-900">
+            {title}
+          </h3>
         </div>
 
         <p className="mt-1 text-xs leading-5 text-slate-500">
@@ -145,7 +150,7 @@ function PipelineStep({
 function EventIcon({ type }: { type: string }) {
   if (type === "success") {
     return (
-      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-50">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-50">
         <CheckCircle2 className="h-4 w-4 text-emerald-600" />
       </div>
     )
@@ -153,7 +158,7 @@ function EventIcon({ type }: { type: string }) {
 
   if (type === "warning") {
     return (
-      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-amber-50">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-amber-50">
         <AlertTriangle className="h-4 w-4 text-amber-600" />
       </div>
     )
@@ -161,14 +166,14 @@ function EventIcon({ type }: { type: string }) {
 
   if (type === "danger") {
     return (
-      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-red-50">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-red-50">
         <XCircle className="h-4 w-4 text-red-600" />
       </div>
     )
   }
 
   return (
-    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-50">
+    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-50">
       <CircleDot className="h-4 w-4 text-blue-600" />
     </div>
   )
@@ -176,37 +181,39 @@ function EventIcon({ type }: { type: string }) {
 
 export default function Dashboard() {
   return (
-    <div className="min-h-full bg-slate-50 px-4 py-6 sm:px-6 lg:px-8">
+    <div className="min-h-full w-full overflow-x-hidden bg-slate-50 px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
 
       {/* Header */}
-      <div className="mb-7 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div>
+      <div className="mb-6 flex flex-col gap-4 sm:mb-7 lg:flex-row lg:items-end lg:justify-between">
+        <div className="min-w-0">
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-emerald-500" />
+            <span className="h-2 w-2 shrink-0 rounded-full bg-emerald-500" />
+
             <span className="text-xs font-semibold uppercase tracking-wider text-emerald-700">
               System operational
             </span>
           </div>
 
-          <h1 className="mt-2 text-2xl font-bold tracking-tight text-slate-950">
+          <h1 className="mt-2 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
             BATI Dashboard
           </h1>
 
-          <p className="mt-1 max-w-2xl text-sm text-slate-500">
+          <p className="mt-1 max-w-2xl text-xs leading-5 text-slate-500 sm:text-sm">
             Barbados AI Trust Infrastructure — research environment for
             trustworthy, privacy-preserving and accountable artificial
             intelligence.
           </p>
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+        <div className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm sm:w-auto">
           <div className="flex items-center gap-3">
-            <ShieldCheck className="h-5 w-5 text-emerald-600" />
+            <ShieldCheck className="h-5 w-5 shrink-0 text-emerald-600" />
 
-            <div>
+            <div className="min-w-0">
               <p className="text-xs font-semibold text-slate-800">
                 Research Prototype
               </p>
+
               <p className="text-[11px] text-slate-400">
                 Experimental data environment
               </p>
@@ -216,7 +223,7 @@ export default function Dashboard() {
       </div>
 
       {/* Research disclaimer */}
-      <div className="mb-6 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3">
+      <div className="mb-5 rounded-xl border border-blue-100 bg-blue-50 px-3 py-3 sm:mb-6 sm:px-4">
         <div className="flex gap-3">
           <Activity className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
 
@@ -230,7 +237,7 @@ export default function Dashboard() {
       </div>
 
       {/* Metrics */}
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
         <MetricCard
           label="Digital Identities"
           value="12,482"
@@ -264,12 +271,12 @@ export default function Dashboard() {
       </div>
 
       {/* Main analytics */}
-      <div className="mt-6 grid gap-6 xl:grid-cols-3">
+      <div className="mt-5 grid gap-4 sm:mt-6 sm:gap-6 xl:grid-cols-3">
 
         {/* Activity chart */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm xl:col-span-2">
-          <div className="flex items-start justify-between">
-            <div>
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5 xl:col-span-2">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
               <h2 className="text-sm font-semibold text-slate-900">
                 Trust Activity
               </h2>
@@ -279,17 +286,30 @@ export default function Dashboard() {
               </p>
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-slate-400">
+            <div className="flex shrink-0 items-center gap-2 text-xs text-slate-400">
               <Clock3 className="h-3.5 w-3.5" />
-              Last 7 days
+
+              <span className="hidden sm:inline">
+                Last 7 days
+              </span>
+
+              <span className="sm:hidden">
+                7 days
+              </span>
             </div>
           </div>
 
-          <div className="mt-5 h-[260px]">
+          <div className="mt-4 h-[220px] sm:mt-5 sm:h-[260px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={activityData}>
                 <defs>
-                  <linearGradient id="trustActivity" x1="0" y1="0" x2="0" y2="1">
+                  <linearGradient
+                    id="trustActivity"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
                     <stop offset="0%" stopOpacity={0.2} />
                     <stop offset="100%" stopOpacity={0} />
                   </linearGradient>
@@ -335,7 +355,7 @@ export default function Dashboard() {
         </div>
 
         {/* Risk distribution */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <div>
             <h2 className="text-sm font-semibold text-slate-900">
               Risk Distribution
@@ -346,15 +366,15 @@ export default function Dashboard() {
             </p>
           </div>
 
-          <div className="relative mt-4 h-[210px]">
+          <div className="relative mt-4 h-[190px] sm:h-[210px]">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
                   data={riskData}
                   dataKey="value"
                   nameKey="name"
-                  innerRadius={58}
-                  outerRadius={82}
+                  innerRadius={52}
+                  outerRadius={72}
                   paddingAngle={3}
                 >
                   {riskData.map((entry, index) => (
@@ -376,7 +396,10 @@ export default function Dashboard() {
             </ResponsiveContainer>
 
             <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-2xl font-bold text-slate-950">82%</span>
+              <span className="text-2xl font-bold text-slate-950">
+                82%
+              </span>
+
               <span className="text-[10px] uppercase tracking-wider text-slate-400">
                 Safe
               </span>
@@ -400,7 +423,9 @@ export default function Dashboard() {
                     }`}
                   />
 
-                  <span className="text-slate-600">{risk.name}</span>
+                  <span className="text-slate-600">
+                    {risk.name}
+                  </span>
                 </div>
 
                 <span className="font-semibold text-slate-800">
@@ -413,9 +438,9 @@ export default function Dashboard() {
       </div>
 
       {/* Trust pipeline */}
-      <div className="mt-6 grid gap-6 xl:grid-cols-2">
+      <div className="mt-5 grid gap-4 sm:mt-6 sm:gap-6 xl:grid-cols-2">
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <div className="mb-5">
             <h2 className="text-sm font-semibold text-slate-900">
               BATI Trust Pipeline
@@ -467,9 +492,9 @@ export default function Dashboard() {
         </div>
 
         {/* Accountability */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="mb-5 flex items-start justify-between">
-            <div>
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+          <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div className="min-w-0">
               <h2 className="text-sm font-semibold text-slate-900">
                 Recent Accountability Events
               </h2>
@@ -479,7 +504,7 @@ export default function Dashboard() {
               </p>
             </div>
 
-            <button className="text-xs font-semibold text-slate-600 hover:text-slate-950">
+            <button className="self-start text-xs font-semibold text-slate-600 hover:text-slate-950">
               View audit trail
             </button>
           </div>
@@ -512,16 +537,19 @@ export default function Dashboard() {
       </div>
 
       {/* Bottom status */}
-      <div className="mt-6 grid gap-4 sm:grid-cols-3">
+      <div className="mt-5 grid gap-3 sm:mt-6 sm:grid-cols-3 sm:gap-4">
 
-        <div className="rounded-xl border border-slate-200 bg-white p-4">
+        <div className="rounded-xl border border-slate-200 bg-white p-3 sm:p-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-50">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-50">
               <ShieldCheck className="h-4 w-4 text-emerald-600" />
             </div>
 
             <div>
-              <p className="text-xs text-slate-400">Identity Layer</p>
+              <p className="text-xs text-slate-400">
+                Identity Layer
+              </p>
+
               <p className="text-sm font-semibold text-slate-800">
                 Operational
               </p>
@@ -529,14 +557,17 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-4">
+        <div className="rounded-xl border border-slate-200 bg-white p-3 sm:p-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50">
               <Network className="h-4 w-4 text-blue-600" />
             </div>
 
             <div>
-              <p className="text-xs text-slate-400">AI Intelligence</p>
+              <p className="text-xs text-slate-400">
+                AI Intelligence
+              </p>
+
               <p className="text-sm font-semibold text-slate-800">
                 Research Mode
               </p>
@@ -544,14 +575,17 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-4">
+        <div className="rounded-xl border border-slate-200 bg-white p-3 sm:p-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-violet-50">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-violet-50">
               <Activity className="h-4 w-4 text-violet-600" />
             </div>
 
             <div>
-              <p className="text-xs text-slate-400">Governance</p>
+              <p className="text-xs text-slate-400">
+                Governance
+              </p>
+
               <p className="text-sm font-semibold text-slate-800">
                 Audit Enabled
               </p>

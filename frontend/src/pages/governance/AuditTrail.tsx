@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useState } from "react";
 import {
   Activity,
@@ -187,7 +186,7 @@ export default function AuditTrail() {
   }
 
   useEffect(() => {
-    loadAuditLogs();
+    void loadAuditLogs();
   }, []);
 
   const recentEvents = useMemo(() => {
@@ -240,14 +239,15 @@ export default function AuditTrail() {
   }, [events]);
 
   return (
-    <div className="min-h-full bg-slate-50 px-4 py-6 sm:px-6 lg:px-8">
-      <div className="mb-7 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div>
+    <div className="min-h-full w-full overflow-x-hidden bg-slate-50 px-3 py-5 sm:px-6 sm:py-6 lg:px-8">
+      {/* Header */}
+      <div className="mb-6 flex flex-col gap-4 lg:mb-7 lg:flex-row lg:items-end lg:justify-between">
+        <div className="min-w-0">
           <div className="text-xs font-semibold uppercase tracking-wider text-[#55749c]">
             Governance
           </div>
 
-          <h1 className="mt-2 text-2xl font-bold tracking-tight text-slate-950">
+          <h1 className="mt-2 text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
             Audit Trail
           </h1>
 
@@ -261,18 +261,19 @@ export default function AuditTrail() {
           type="button"
           onClick={() => loadAuditLogs(true)}
           disabled={refreshing}
-          className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex min-h-11 w-full shrink-0 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
         >
           <RefreshCw
             size={15}
             className={refreshing ? "animate-spin" : ""}
           />
-          Refresh
+          {refreshing ? "Refreshing..." : "Refresh"}
         </button>
       </div>
 
-      <div className="mb-6 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3">
-        <div className="flex gap-3">
+      {/* Research notice */}
+      <div className="mb-5 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 sm:mb-6 sm:px-5">
+        <div className="flex items-start gap-3">
           <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
 
           <p className="text-xs leading-5 text-blue-800">
@@ -285,25 +286,29 @@ export default function AuditTrail() {
         </div>
       </div>
 
+      {/* Error */}
       {error && (
-        <div className="mb-6 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mb-5 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm leading-5 text-red-700 sm:mb-6">
           <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
 
-          <div>
+          <div className="min-w-0">
             <p className="font-semibold">
               Unable to load audit data
             </p>
 
-            <p className="mt-1 text-xs">{error}</p>
+            <p className="mt-1 break-words text-xs">
+              {error}
+            </p>
           </div>
         </div>
       )}
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      {/* Summary */}
+      <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <Activity className="h-5 w-5 text-slate-700" />
 
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
             Audit Events
           </p>
 
@@ -311,15 +316,15 @@ export default function AuditTrail() {
             {loading ? "—" : events.length}
           </p>
 
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Events returned by backend
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <CheckCircle2 className="h-5 w-5 text-emerald-600" />
 
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
             Verification Events
           </p>
 
@@ -327,15 +332,15 @@ export default function AuditTrail() {
             {loading ? "—" : verifiedEvents}
           </p>
 
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Credential or identity verification activity
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <AlertCircle className="h-5 w-5 text-red-600" />
 
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
             Exceptions
           </p>
 
@@ -343,15 +348,15 @@ export default function AuditTrail() {
             {loading ? "—" : failedEvents}
           </p>
 
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Failed, rejected or denied actions
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <FileSearch className="h-5 w-5 text-blue-600" />
 
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
             Active Actors
           </p>
 
@@ -359,23 +364,24 @@ export default function AuditTrail() {
             {loading ? "—" : uniqueActors}
           </p>
 
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Distinct audit actors represented
           </p>
         </div>
       </div>
 
-      <div className="mt-6 rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <div className="border-b border-slate-100 px-5 py-4">
-          <div className="flex items-center gap-2">
-            <Clock3 className="h-4 w-4 text-slate-500" />
+      {/* Audit activity */}
+      <div className="mt-5 rounded-2xl border border-slate-200 bg-white shadow-sm sm:mt-6">
+        <div className="border-b border-slate-100 px-4 py-4 sm:px-5">
+          <div className="flex items-start gap-2">
+            <Clock3 className="mt-0.5 h-4 w-4 shrink-0 text-slate-500" />
 
-            <div>
+            <div className="min-w-0">
               <h2 className="text-sm font-semibold text-slate-900">
                 Recent Audit Activity
               </h2>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs leading-5 text-slate-500">
                 Chronological audit events retrieved from the live API
               </p>
             </div>
@@ -383,11 +389,11 @@ export default function AuditTrail() {
         </div>
 
         {loading ? (
-          <div className="py-16 text-center text-sm text-slate-400">
+          <div className="px-4 py-16 text-center text-sm text-slate-400 sm:px-5">
             Loading audit activity...
           </div>
         ) : recentEvents.length === 0 ? (
-          <div className="py-16 text-center text-sm text-slate-400">
+          <div className="px-4 py-16 text-center text-sm text-slate-400 sm:px-5">
             No audit events are currently available.
           </div>
         ) : (
@@ -395,12 +401,13 @@ export default function AuditTrail() {
             {recentEvents.map((event) => (
               <div
                 key={event.id}
-                className="px-5 py-5 transition hover:bg-slate-50"
+                className="px-4 py-5 transition hover:bg-slate-50 sm:px-5"
               >
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                  <div className="min-w-0">
+                  {/* Event details */}
+                  <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-sm font-semibold text-slate-900">
+                      <span className="break-all text-sm font-semibold text-slate-900">
                         {displayReference(event)}
                       </span>
 
@@ -413,28 +420,30 @@ export default function AuditTrail() {
                       </span>
                     </div>
 
-                    <p className="mt-2 text-xs font-medium uppercase tracking-wide text-slate-400">
+                    <p className="mt-2 break-words text-xs font-medium uppercase tracking-wide text-slate-400">
                       {displayEventType(event)}
                     </p>
 
-                    <p className="mt-2 text-sm leading-6 text-slate-600">
+                    <p className="mt-2 break-words text-sm leading-6 text-slate-600">
                       {event.description ??
                         "No description available."}
                     </p>
                   </div>
 
-                  <div className="shrink-0 text-left lg:text-right">
-                    <p className="text-xs font-medium text-slate-500">
+                  {/* Date / actor */}
+                  <div className="min-w-0 text-left lg:w-48 lg:shrink-0 lg:text-right">
+                    <p className="break-words text-xs font-medium leading-5 text-slate-500">
                       {formatDate(eventTimestamp(event))}
                     </p>
 
-                    <p className="mt-1 text-[10px] uppercase tracking-wider text-slate-400">
+                    <p className="mt-1 break-words text-[10px] uppercase tracking-wider text-slate-400">
                       {displayActor(event)}
                     </p>
                   </div>
                 </div>
 
-                <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-[11px] text-slate-400">
+                {/* Entity metadata */}
+                <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-[11px] leading-5 text-slate-400">
                   {event.entity_type && (
                     <span>
                       Entity:{" "}
@@ -447,7 +456,7 @@ export default function AuditTrail() {
                   {event.entity_id && (
                     <span>
                       Entity ID:{" "}
-                      <span className="font-medium text-slate-500">
+                      <span className="break-all font-medium text-slate-500">
                         {event.entity_id}
                       </span>
                     </span>
@@ -468,5 +477,3 @@ export default function AuditTrail() {
     </div>
   );
 }
-
-

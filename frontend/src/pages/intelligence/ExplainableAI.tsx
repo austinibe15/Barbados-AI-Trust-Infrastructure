@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useState } from "react"
 import {
   AlertTriangle,
@@ -9,8 +8,8 @@ import {
 } from "lucide-react"
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
-  
+  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000"
+
 interface RiskEvent {
   id: number
   event_reference: string
@@ -49,7 +48,11 @@ function classificationClasses(value: string) {
   return "bg-emerald-50 text-emerald-700 border-emerald-100"
 }
 
-function ExplanationIcon({ classification }: { classification: string }) {
+function ExplanationIcon({
+  classification,
+}: {
+  classification: string
+}) {
   const value = classification.toLowerCase()
 
   if (value === "critical" || value === "high") {
@@ -108,7 +111,8 @@ export default function ExplainableAI() {
   const criticalCount = useMemo(
     () =>
       events.filter(
-        (event) => event.risk_classification.toLowerCase() === "critical",
+        (event) =>
+          event.risk_classification.toLowerCase() === "critical",
       ).length,
     [events],
   )
@@ -116,7 +120,8 @@ export default function ExplainableAI() {
   const highCount = useMemo(
     () =>
       events.filter(
-        (event) => event.risk_classification.toLowerCase() === "high",
+        (event) =>
+          event.risk_classification.toLowerCase() === "high",
       ).length,
     [events],
   )
@@ -125,106 +130,119 @@ export default function ExplainableAI() {
     if (events.length === 0) return 0
 
     return (
-      events.reduce((total, event) => total + Number(event.risk_score || 0), 0) /
-      events.length
+      events.reduce(
+        (total, event) =>
+          total + Number(event.risk_score || 0),
+        0,
+      ) / events.length
     ).toFixed(1)
   }, [events])
 
   return (
-    <div className="min-h-full bg-slate-50 px-4 py-7 sm:px-6 lg:px-8">
-      <div className="mb-7">
-        <div className="text-xs font-semibold uppercase tracking-wider text-[#55749c]">
+    <div className="min-h-full w-full overflow-x-hidden bg-slate-50 px-3 py-5 sm:px-6 sm:py-7 lg:px-8">
+      {/* Page Header */}
+      <div className="mb-6 sm:mb-7">
+        <div className="text-[11px] font-semibold uppercase tracking-wider text-[#55749c] sm:text-xs">
           AI Intelligence
         </div>
 
-        <h1 className="mt-2 text-2xl font-bold text-slate-900">
+        <h1 className="mt-2 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
           Explainable AI
         </h1>
 
         <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500">
-          Interpretation of AI-assisted risk assessments and decision-support
-          outputs using live BATI risk intelligence.
+          Interpretation of AI-assisted risk assessments and
+          decision-support outputs using live BATI risk
+          intelligence.
         </p>
       </div>
 
-      <div className="mb-6 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3">
-        <div className="flex gap-3">
+      {/* Research Prototype Notice */}
+      <div className="mb-5 rounded-xl border border-blue-100 bg-blue-50 px-3 py-3 sm:mb-6 sm:px-4">
+        <div className="flex items-start gap-3">
           <Info className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
 
-          <p className="text-xs leading-5 text-blue-800">
-            <span className="font-semibold">Research prototype:</span>{" "}
-            Explanations shown here are generated from the current BATI risk
-            event records. They provide interpretable evidence for
-            research-stage risk decisions.
+          <p className="min-w-0 text-xs leading-5 text-blue-800">
+            <span className="font-semibold">
+              Research prototype:
+            </span>{" "}
+            Explanations shown here are generated from the
+            current BATI risk event records. They provide
+            interpretable evidence for research-stage risk
+            decisions.
           </p>
         </div>
       </div>
 
-      <div className="mb-6 grid gap-4 sm:grid-cols-3">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      {/* Summary Cards */}
+      <div className="mb-5 grid grid-cols-1 gap-3 sm:mb-6 sm:grid-cols-3 sm:gap-4">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
             Risk Events
           </p>
 
           <p className="mt-2 text-2xl font-bold text-slate-950">
-            {events.length}
+            {loading ? "—" : events.length}
           </p>
 
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs leading-5 text-slate-500">
             Live events from BATI risk engine
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
             Critical Events
           </p>
 
           <p className="mt-2 text-2xl font-bold text-red-600">
-            {criticalCount}
+            {loading ? "—" : criticalCount}
           </p>
 
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs leading-5 text-slate-500">
             Immediate review priority
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
             Average Risk Score
           </p>
 
           <p className="mt-2 text-2xl font-bold text-slate-950">
-            {averageScore}
+            {loading ? "—" : averageScore}
           </p>
 
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs leading-5 text-slate-500">
             Across current risk observations
           </p>
         </div>
       </div>
 
+      {/* Error */}
       {error && (
-        <div className="mb-6 rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mb-5 rounded-xl border border-red-100 bg-red-50 px-3 py-3 text-sm leading-5 text-red-700 sm:mb-6 sm:px-4">
           {error}
         </div>
       )}
 
+      {/* Explainable Risk Assessments */}
       <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <div className="border-b border-slate-100 px-5 py-4">
-          <div className="flex items-center justify-between">
-            <div>
+        <div className="border-b border-slate-100 px-4 py-4 sm:px-5">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0">
               <h2 className="text-sm font-semibold text-slate-900">
                 Explainable Risk Assessments
               </h2>
 
-              <p className="mt-1 text-xs text-slate-500">
-                Evidence and explanations associated with live risk events
+              <p className="mt-1 text-xs leading-5 text-slate-500">
+                Evidence and explanations associated with live
+                risk events
               </p>
             </div>
 
             <div className="flex items-center gap-2 text-xs text-slate-400">
-              <Clock3 className="h-3.5 w-3.5" />
+              <Clock3 className="h-3.5 w-3.5 shrink-0" />
               Live data
             </div>
           </div>
@@ -232,55 +250,61 @@ export default function ExplainableAI() {
 
         <div className="divide-y divide-slate-100">
           {loading ? (
-            <div className="px-5 py-10 text-center text-sm text-slate-500">
+            <div className="px-4 py-10 text-center text-sm text-slate-500 sm:px-5">
+              <div className="mx-auto mb-3 h-5 w-5 animate-spin rounded-full border-2 border-slate-200 border-t-slate-500" />
               Loading risk explanations...
             </div>
           ) : events.length === 0 ? (
-            <div className="px-5 py-10 text-center text-sm text-slate-500">
+            <div className="px-4 py-10 text-center text-sm text-slate-500 sm:px-5">
               No risk events are currently available.
             </div>
           ) : (
             events.map((event) => (
               <div
                 key={event.id}
-                className="flex gap-4 px-5 py-5"
+                className="flex gap-3 px-4 py-4 sm:gap-4 sm:px-5 sm:py-5"
               >
                 <ExplanationIcon
                   classification={event.risk_classification}
                 />
 
                 <div className="min-w-0 flex-1">
+                  {/* Event Header */}
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <p className="text-sm font-semibold text-slate-900">
+                    <div className="min-w-0">
+                      <p className="break-words text-sm font-semibold text-slate-900">
                         {event.event_type}
                       </p>
 
-                      <p className="mt-1 text-xs text-slate-400">
+                      <p className="mt-1 break-all text-xs leading-5 text-slate-400">
                         {event.event_reference}
                       </p>
                     </div>
 
                     <span
-                      className={`inline-flex w-fit rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${classificationClasses(
+                      className={`inline-flex min-h-7 w-fit shrink-0 items-center rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${classificationClasses(
                         event.risk_classification,
                       )}`}
                     >
-                      {classificationLabel(event.risk_classification)}
+                      {classificationLabel(
+                        event.risk_classification,
+                      )}
                     </span>
                   </div>
 
-                  <div className="mt-3 rounded-xl border border-slate-100 bg-slate-50 p-4">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                  {/* Explanation */}
+                  <div className="mt-3 rounded-xl border border-slate-100 bg-slate-50 p-3 sm:p-4">
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 sm:text-xs">
                       Explanation
                     </p>
 
-                    <p className="mt-1 text-sm leading-6 text-slate-700">
+                    <p className="mt-1 break-words text-sm leading-6 text-slate-700">
                       {event.explanation}
                     </p>
                   </div>
 
-                  <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-xs text-slate-500">
+                  {/* Metadata */}
+                  <div className="mt-3 grid grid-cols-1 gap-2 text-xs text-slate-500 sm:flex sm:flex-wrap sm:gap-x-5 sm:gap-y-2">
                     <span>
                       Risk score:{" "}
                       <strong className="text-slate-800">
@@ -296,10 +320,12 @@ export default function ExplainableAI() {
                     </span>
 
                     {event.created_at && (
-                      <span>
+                      <span className="break-words">
                         Created:{" "}
                         <strong className="text-slate-800">
-                          {new Date(event.created_at).toLocaleString()}
+                          {new Date(
+                            event.created_at,
+                          ).toLocaleString()}
                         </strong>
                       </span>
                     )}
@@ -311,14 +337,16 @@ export default function ExplainableAI() {
         </div>
       </div>
 
+      {/* High-Risk Notice */}
       {highCount > 0 && (
-        <div className="mt-6 rounded-xl border border-orange-100 bg-orange-50 px-4 py-3">
-          <div className="flex gap-3">
+        <div className="mt-5 rounded-xl border border-orange-100 bg-orange-50 px-3 py-3 sm:mt-6 sm:px-4">
+          <div className="flex items-start gap-3">
             <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-orange-600" />
 
-            <p className="text-xs leading-5 text-orange-800">
-              {highCount} high-risk event{highCount === 1 ? "" : "s"} require
-              institutional review.
+            <p className="min-w-0 text-xs leading-5 text-orange-800">
+              {highCount} high-risk event
+              {highCount === 1 ? "" : "s"} require institutional
+              review.
             </p>
           </div>
         </div>

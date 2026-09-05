@@ -1,3 +1,4 @@
+
 from datetime import datetime
 from typing import Optional
 
@@ -79,3 +80,4 @@ class Credential(Base):
         Text,
         nullable=True,
     )
+

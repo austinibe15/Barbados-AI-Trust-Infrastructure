@@ -10,14 +10,14 @@ import {
 
 export default function Models() {
   return (
-    <div className="min-h-full bg-slate-50 px-4 py-6 sm:px-6 lg:px-8">
+    <div className="min-h-full w-full overflow-x-hidden bg-slate-50 px-3 py-5 sm:px-6 sm:py-7 lg:px-8">
       {/* Header */}
-      <div className="mb-7">
-        <div className="text-xs font-semibold uppercase tracking-wider text-[#55749c]">
+      <div className="mb-5 sm:mb-7">
+        <div className="text-[11px] font-semibold uppercase tracking-wider text-[#55749c] sm:text-xs">
           Research
         </div>
 
-        <h1 className="mt-2 text-2xl font-bold tracking-tight text-slate-950">
+        <h1 className="mt-2 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
           Models
         </h1>
 
@@ -27,12 +27,12 @@ export default function Models() {
         </p>
       </div>
 
-      {/* Research notice */}
-      <div className="mb-6 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3">
-        <div className="flex gap-3">
+      {/* Research Notice */}
+      <div className="mb-5 rounded-xl border border-blue-100 bg-blue-50 px-3 py-3 sm:mb-6 sm:px-4">
+        <div className="flex items-start gap-3">
           <BrainCircuit className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
 
-          <p className="text-xs leading-5 text-blue-800">
+          <p className="min-w-0 text-xs leading-5 text-blue-800">
             <span className="font-semibold">Research mode:</span>{" "}
             The model registry interface is prepared for model metadata,
             evaluation results and experiment relationships. A dedicated
@@ -41,14 +41,15 @@ export default function Models() {
         </div>
       </div>
 
-      {/* Model registry status */}
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      {/* Model Registry Status */}
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
+        {/* Model Registry */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-50">
             <Cpu className="h-5 w-5 text-violet-600" />
           </div>
 
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
             Model Registry
           </p>
 
@@ -56,17 +57,18 @@ export default function Models() {
             Ready
           </p>
 
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Research model catalogue
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        {/* Metadata */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50">
             <Database className="h-5 w-5 text-blue-600" />
           </div>
 
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
             Metadata
           </p>
 
@@ -74,17 +76,18 @@ export default function Models() {
             Prepared
           </p>
 
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Architecture and configuration records
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        {/* Experiments */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50">
             <FlaskConical className="h-5 w-5 text-emerald-600" />
           </div>
 
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
             Experiments
           </p>
 
@@ -92,17 +95,18 @@ export default function Models() {
             Linked
           </p>
 
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Model-to-experiment relationship
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        {/* Trust Evaluation */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50">
             <ShieldCheck className="h-5 w-5 text-emerald-600" />
           </div>
 
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
             Trust Evaluation
           </p>
 
@@ -110,32 +114,32 @@ export default function Models() {
             Research
           </p>
 
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Trustworthiness evaluation context
           </p>
         </div>
       </div>
 
-      {/* Model registry */}
-      <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <div className="mb-5 flex items-start gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100">
+      {/* Model Registry */}
+      <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:mt-6 sm:p-5">
+        <div className="mb-4 flex items-start gap-3 sm:mb-5">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100">
             <BrainCircuit className="h-5 w-5 text-slate-700" />
           </div>
 
-          <div>
+          <div className="min-w-0">
             <h2 className="text-sm font-semibold text-slate-900">
               AI Model Registry
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs leading-5 text-slate-500">
               Models evaluated or intended for evaluation within the BATI
               research environment.
             </p>
           </div>
         </div>
 
-        <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 px-5 py-10 text-center">
+        <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-8 text-center sm:px-5 sm:py-10">
           <Cpu className="mx-auto h-8 w-8 text-slate-300" />
 
           <p className="mt-3 text-sm font-semibold text-slate-700">
@@ -150,17 +154,18 @@ export default function Models() {
         </div>
       </div>
 
-      {/* Planned model metadata */}
-      <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      {/* Planned Model Metadata */}
+      <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:mt-6 sm:p-5">
         <h2 className="text-sm font-semibold text-slate-900">
           Model Record Structure
         </h2>
 
-        <p className="mt-1 text-xs text-slate-500">
+        <p className="mt-1 text-xs leading-5 text-slate-500">
           Planned research metadata represented by the model registry.
         </p>
 
-        <div className="mt-5 grid gap-3 md:grid-cols-3">
+        <div className="mt-4 grid grid-cols-1 gap-3 sm:mt-5 md:grid-cols-3">
+          {/* Model Identity */}
           <div className="rounded-xl border border-slate-100 p-4">
             <p className="text-xs font-semibold text-slate-800">
               Model Identity
@@ -171,6 +176,7 @@ export default function Models() {
             </p>
           </div>
 
+          {/* Evaluation */}
           <div className="rounded-xl border border-slate-100 p-4">
             <p className="text-xs font-semibold text-slate-800">
               Evaluation
@@ -181,6 +187,7 @@ export default function Models() {
             </p>
           </div>
 
+          {/* Governance */}
           <div className="rounded-xl border border-slate-100 p-4">
             <p className="text-xs font-semibold text-slate-800">
               Governance
@@ -194,16 +201,16 @@ export default function Models() {
       </div>
 
       {/* Status */}
-      <div className="mt-6 rounded-xl border border-slate-200 bg-white p-4">
-        <div className="flex items-center gap-3">
-          <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+      <div className="mt-5 rounded-xl border border-slate-200 bg-white p-4 sm:mt-6">
+        <div className="flex items-start gap-3">
+          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
 
-          <div>
+          <div className="min-w-0">
             <p className="text-sm font-semibold text-slate-800">
               Model Research Interface Operational
             </p>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs leading-5 text-slate-500">
               Waiting for the dedicated research model API to be exposed by
               the backend.
             </p>
@@ -213,3 +220,5 @@ export default function Models() {
     </div>
   );
 }
+
+

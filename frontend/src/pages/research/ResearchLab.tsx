@@ -10,14 +10,13 @@ import {
 
 export default function ResearchLab() {
   return (
-    <div className="min-h-full bg-slate-50 px-4 py-6 sm:px-6 lg:px-8">
-      {/* Header */}
-      <div className="mb-7">
-        <div className="text-xs font-semibold uppercase tracking-wider text-[#55749c]">
+    <div className="min-h-full w-full overflow-x-hidden bg-slate-50 px-3 py-5 sm:px-6 sm:py-7 lg:px-8">
+      <div className="mb-5 sm:mb-7">
+        <div className="text-[11px] font-semibold uppercase tracking-wider text-[#55749c] sm:text-xs">
           Research
         </div>
 
-        <h1 className="mt-2 text-2xl font-bold tracking-tight text-slate-950">
+        <h1 className="mt-2 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
           Research Lab
         </h1>
 
@@ -28,12 +27,11 @@ export default function ResearchLab() {
         </p>
       </div>
 
-      {/* Research status */}
-      <div className="mb-6 rounded-xl border border-violet-100 bg-violet-50 px-4 py-3">
-        <div className="flex gap-3">
+      <div className="mb-5 rounded-xl border border-violet-100 bg-violet-50 px-3 py-3 sm:mb-6 sm:px-4">
+        <div className="flex items-start gap-3">
           <FlaskConical className="mt-0.5 h-4 w-4 shrink-0 text-violet-600" />
 
-          <p className="text-xs leading-5 text-violet-800">
+          <p className="min-w-0 text-xs leading-5 text-violet-800">
             <span className="font-semibold">Research environment:</span>{" "}
             The laboratory interface is active. Research datasets, models,
             experiments and evaluation results will be connected as their
@@ -42,14 +40,13 @@ export default function ResearchLab() {
         </div>
       </div>
 
-      {/* Research modules */}
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-50">
             <Beaker className="h-5 w-5 text-violet-600" />
           </div>
 
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
             Research Workspace
           </p>
 
@@ -57,17 +54,17 @@ export default function ResearchLab() {
             Active
           </p>
 
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Experimental research environment
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50">
             <BrainCircuit className="h-5 w-5 text-blue-600" />
           </div>
 
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
             AI Models
           </p>
 
@@ -75,17 +72,17 @@ export default function ResearchLab() {
             Registry
           </p>
 
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Model investigation and tracking
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50">
             <Activity className="h-5 w-5 text-emerald-600" />
           </div>
 
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
             Experiments
           </p>
 
@@ -93,17 +90,17 @@ export default function ResearchLab() {
             Ready
           </p>
 
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Experimental runs and observations
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50">
             <ShieldCheck className="h-5 w-5 text-emerald-600" />
           </div>
 
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
             Evaluation
           </p>
 
@@ -111,25 +108,24 @@ export default function ResearchLab() {
             Research Mode
           </p>
 
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Trustworthiness and model evaluation
           </p>
         </div>
       </div>
 
-      {/* Research architecture */}
-      <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <div className="mb-5">
+      <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:mt-6 sm:p-5">
+        <div className="mb-4 sm:mb-5">
           <h2 className="text-sm font-semibold text-slate-900">
             BATI Research Workflow
           </h2>
 
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs leading-5 text-slate-500">
             Experimental workflow supporting trustworthy AI research
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4 sm:gap-4">
           <div className="rounded-xl border border-slate-100 bg-slate-50 p-4">
             <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
               01
@@ -191,17 +187,16 @@ export default function ResearchLab() {
         </div>
       </div>
 
-      {/* Backend status */}
-      <div className="mt-6 rounded-xl border border-slate-200 bg-white p-4">
-        <div className="flex items-center gap-3">
-          <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+      <div className="mt-5 rounded-xl border border-slate-200 bg-white p-4 sm:mt-6">
+        <div className="flex items-start gap-3">
+          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
 
-          <div>
+          <div className="min-w-0">
             <p className="text-sm font-semibold text-slate-800">
               Research Interface Operational
             </p>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs leading-5 text-slate-500">
               Research-specific backend APIs are not currently exposed by the
               BATI backend service.
             </p>

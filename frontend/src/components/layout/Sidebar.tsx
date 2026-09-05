@@ -146,53 +146,58 @@ export default function Sidebar({
 }: SidebarProps) {
   return (
     <>
+      {/* Mobile backdrop */}
       {open && (
         <button
-          className="fixed inset-0 z-40 bg-slate-950/30 lg:hidden"
+          type="button"
+          className="fixed inset-0 z-40 bg-slate-950/30 backdrop-blur-[1px] lg:hidden"
           onClick={onClose}
           aria-label="Close navigation"
         />
       )}
 
       <aside
-        className={`fixed left-0 top-0 z-50 flex h-screen w-[270px] flex-col border-r border-slate-200 bg-white transition-transform ${
+        className={`fixed left-0 top-0 z-50 flex h-[100dvh] w-[min(86vw,320px)] flex-col border-r border-slate-200 bg-white shadow-xl transition-transform duration-300 ease-out lg:h-screen lg:w-[270px] lg:shadow-none ${
           open
             ? "translate-x-0"
             : "-translate-x-full lg:translate-x-0"
         }`}
       >
         {/* Logo */}
-        <div className="flex h-[76px] items-center justify-between border-b border-slate-100 px-5">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#173b72] text-white">
+        <div className="flex min-h-[76px] shrink-0 items-center justify-between border-b border-slate-100 px-4 sm:px-5">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#173b72] text-white">
               <ShieldCheck size={22} />
             </div>
 
-            <div>
+            <div className="min-w-0">
               <div className="text-lg font-bold text-[#173b72]">
                 BATI
               </div>
 
-              <div className="text-[10px] uppercase tracking-wider text-slate-400">
+              <div className="truncate text-[10px] uppercase tracking-wider text-slate-400">
                 AI Trust Infrastructure
               </div>
             </div>
           </div>
 
+          {/* Mobile close button */}
           <button
+            type="button"
             onClick={onClose}
-            className="lg:hidden"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-slate-500 transition hover:bg-slate-100 hover:text-slate-800 lg:hidden"
+            aria-label="Close navigation menu"
           >
-            <X size={20} />
+            <X size={21} />
           </button>
         </div>
 
         {/* Navigation */}
-        <div className="flex-1 overflow-y-auto px-3 py-5">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 py-5">
           {navigation.map((group) => (
             <div
               key={group.section}
-              className="mb-6"
+              className="mb-6 last:mb-2"
             >
               <div className="mb-2 px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400">
                 {group.section}
@@ -208,19 +213,24 @@ export default function Sidebar({
                       to={item.path}
                       onClick={onClose}
                       className={({ isActive }) =>
-                        `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
+                        `flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm font-medium transition ${
                           isActive
                             ? "bg-[#edf3fb] text-[#173b72]"
                             : "text-slate-600 hover:bg-slate-50"
                         }`
                       }
                     >
-                      <Icon size={17} />
+                      <Icon
+                        size={18}
+                        className="shrink-0"
+                      />
 
-                      <span>{item.label}</span>
+                      <span className="min-w-0 flex-1 truncate">
+                        {item.label}
+                      </span>
 
                       {item.label === "Risk Centre" && (
-                        <span className="ml-auto rounded-full bg-red-50 px-2 py-0.5 text-[10px] font-bold text-red-600">
+                        <span className="ml-auto shrink-0 rounded-full bg-red-50 px-2 py-0.5 text-[10px] font-bold text-red-600">
                           18
                         </span>
                       )}
@@ -233,15 +243,22 @@ export default function Sidebar({
         </div>
 
         {/* Footer */}
-        <div className="border-t border-slate-100 p-4">
-          <button className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-600 hover:bg-slate-50">
-            <Settings size={17} />
+        <div className="shrink-0 border-t border-slate-100 p-3 sm:p-4">
+          <button
+            type="button"
+            className="flex min-h-11 w-full items-center gap-3 rounded-xl px-3 text-sm text-slate-600 transition hover:bg-slate-50"
+          >
+            <Settings
+              size={18}
+              className="shrink-0"
+            />
+
             Settings
           </button>
 
           <div className="mt-3 rounded-xl bg-[#f5f8fc] p-3">
             <div className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-emerald-500" />
+              <span className="h-2 w-2 shrink-0 rounded-full bg-emerald-500" />
 
               <span className="text-xs font-semibold text-slate-700">
                 System operational

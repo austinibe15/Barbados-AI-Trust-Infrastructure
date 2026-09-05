@@ -1,3 +1,4 @@
+
 import { useEffect, useMemo, useState } from "react";
 import {
   CheckCircle2,
@@ -103,13 +104,14 @@ export default function AccessControl() {
   }).length;
 
   return (
-    <div className="min-h-full bg-slate-50 px-4 py-6 sm:px-6 lg:px-8">
-      <div className="mb-7">
-        <div className="text-xs font-semibold uppercase tracking-wider text-[#55749c]">
+    <div className="min-h-full w-full overflow-x-hidden bg-slate-50 px-3 py-5 sm:px-6 sm:py-7 lg:px-8">
+      {/* Page Header */}
+      <div className="mb-6 sm:mb-7">
+        <div className="text-[11px] font-semibold uppercase tracking-wider text-[#55749c] sm:text-xs">
           Institutions
         </div>
 
-        <h1 className="mt-2 text-2xl font-bold tracking-tight text-slate-950">
+        <h1 className="mt-2 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
           Access Control
         </h1>
 
@@ -119,11 +121,12 @@ export default function AccessControl() {
         </p>
       </div>
 
-      <div className="mb-6 rounded-xl border border-amber-100 bg-amber-50 px-4 py-3">
-        <div className="flex gap-3">
+      {/* Research Prototype Notice */}
+      <div className="mb-5 rounded-xl border border-amber-100 bg-amber-50 px-3 py-3 sm:mb-6 sm:px-4">
+        <div className="flex items-start gap-3">
           <LockKeyhole className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
 
-          <p className="text-xs leading-5 text-amber-800">
+          <p className="min-w-0 text-xs leading-5 text-amber-800">
             <span className="font-semibold">Research prototype:</span>{" "}
             Current access indicators are derived from identity status, role
             and trust attributes. A dedicated authorization policy API has not
@@ -132,69 +135,93 @@ export default function AccessControl() {
         </div>
       </div>
 
+      {/* Error */}
       {error && (
-        <div className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-3 py-3 text-sm leading-5 text-red-700 sm:mb-6 sm:px-4">
           {error}
         </div>
       )}
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <Users className="h-5 w-5 text-slate-700" />
-          <p className="mt-4 text-sm text-slate-500">Identities</p>
+
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
+            Identities
+          </p>
+
           <p className="mt-1 text-2xl font-bold text-slate-950">
             {loading ? "—" : identities.length}
           </p>
-          <p className="mt-1 text-xs text-slate-400">
+
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Identity records under management
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <CheckCircle2 className="h-5 w-5 text-emerald-600" />
-          <p className="mt-4 text-sm text-slate-500">Active Access</p>
+
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
+            Active Access
+          </p>
+
           <p className="mt-1 text-2xl font-bold text-slate-950">
             {loading ? "—" : active}
           </p>
-          <p className="mt-1 text-xs text-slate-400">
+
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Active identity status
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <ShieldCheck className="h-5 w-5 text-blue-600" />
-          <p className="mt-4 text-sm text-slate-500">High Trust</p>
+
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
+            High Trust
+          </p>
+
           <p className="mt-1 text-2xl font-bold text-slate-950">
             {loading ? "—" : highTrust}
           </p>
-          <p className="mt-1 text-xs text-slate-400">
+
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Identities with high trust level
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <ShieldAlert className="h-5 w-5 text-red-600" />
-          <p className="mt-4 text-sm text-slate-500">Restricted</p>
+
+          <p className="mt-3 text-sm text-slate-500 sm:mt-4">
+            Restricted
+          </p>
+
           <p className="mt-1 text-2xl font-bold text-slate-950">
             {loading ? "—" : restricted}
           </p>
-          <p className="mt-1 text-xs text-slate-400">
+
+          <p className="mt-1 text-xs leading-5 text-slate-400">
             Suspended, revoked or inactive
           </p>
         </div>
       </div>
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-2">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      {/* Role Distribution / Access Posture */}
+      <div className="mt-5 grid grid-cols-1 gap-5 sm:mt-6 xl:grid-cols-2">
+        {/* Role Distribution */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <h2 className="text-sm font-semibold text-slate-900">
             Role Distribution
           </h2>
 
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs leading-5 text-slate-500">
             Roles currently represented in the identity service
           </p>
 
-          <div className="mt-5 space-y-3">
+          <div className="mt-4 space-y-3 sm:mt-5">
             {roles.length === 0 ? (
               <p className="py-8 text-center text-sm text-slate-400">
                 No role data available.
@@ -203,13 +230,13 @@ export default function AccessControl() {
               roles.map(([role, count]) => (
                 <div
                   key={role}
-                  className="flex items-center justify-between rounded-xl border border-slate-100 px-4 py-3"
+                  className="flex min-h-11 items-center justify-between gap-3 rounded-xl border border-slate-100 px-3 py-2.5 sm:px-4 sm:py-3"
                 >
-                  <span className="text-sm font-medium text-slate-700">
+                  <span className="min-w-0 break-words text-sm font-medium text-slate-700">
                     {role}
                   </span>
 
-                  <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700">
+                  <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700">
                     {count}
                   </span>
                 </div>
@@ -218,45 +245,46 @@ export default function AccessControl() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        {/* Access Posture */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <h2 className="text-sm font-semibold text-slate-900">
             Access Posture
           </h2>
 
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs leading-5 text-slate-500">
             Current identity status distribution
           </p>
 
-          <div className="mt-5 space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="flex items-center gap-2 text-sm text-slate-600">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+          <div className="mt-4 space-y-3 sm:mt-5 sm:space-y-4">
+            <div className="flex min-h-11 items-center justify-between gap-3 rounded-xl bg-slate-50 px-3 py-2.5 sm:bg-transparent sm:px-0 sm:py-0">
+              <span className="flex min-w-0 items-center gap-2 text-sm text-slate-600">
+                <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" />
                 Verified
               </span>
 
-              <span className="font-semibold text-slate-800">
+              <span className="shrink-0 font-semibold text-slate-800">
                 {verified}
               </span>
             </div>
 
-            <div className="flex items-center justify-between">
-              <span className="flex items-center gap-2 text-sm text-slate-600">
-                <ShieldCheck className="h-4 w-4 text-blue-600" />
+            <div className="flex min-h-11 items-center justify-between gap-3 rounded-xl bg-slate-50 px-3 py-2.5 sm:bg-transparent sm:px-0 sm:py-0">
+              <span className="flex min-w-0 items-center gap-2 text-sm text-slate-600">
+                <ShieldCheck className="h-4 w-4 shrink-0 text-blue-600" />
                 High trust
               </span>
 
-              <span className="font-semibold text-slate-800">
+              <span className="shrink-0 font-semibold text-slate-800">
                 {highTrust}
               </span>
             </div>
 
-            <div className="flex items-center justify-between">
-              <span className="flex items-center gap-2 text-sm text-slate-600">
-                <XCircle className="h-4 w-4 text-red-600" />
+            <div className="flex min-h-11 items-center justify-between gap-3 rounded-xl bg-slate-50 px-3 py-2.5 sm:bg-transparent sm:px-0 sm:py-0">
+              <span className="flex min-w-0 items-center gap-2 text-sm text-slate-600">
+                <XCircle className="h-4 w-4 shrink-0 text-red-600" />
                 Restricted
               </span>
 
-              <span className="font-semibold text-slate-800">
+              <span className="shrink-0 font-semibold text-slate-800">
                 {restricted}
               </span>
             </div>
@@ -266,3 +294,4 @@ export default function AccessControl() {
     </div>
   );
 }
+
